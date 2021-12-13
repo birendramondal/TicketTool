@@ -28,6 +28,11 @@ def Dashboard():
     return render_template('index.html')
 
 
+@app.route("/table")  # Index page
+def Dashboard():
+    pass
+
+
 # load the data
 if __name__ == "__main__":
     app.run(debug=True)
