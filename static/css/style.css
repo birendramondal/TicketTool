@@ -132,6 +132,12 @@ a {
 }
 
 
+.modal-dialog {
+    position: inherit;
+    width: 100%;
+    outline: 0;
+    overflow: hidden;
+}
 
 .container {
     padding-left: 5%;
@@ -148,16 +154,18 @@ a {
 }
 
 /* Set Scroll oin table start  */
-thead, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
+ thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
+
 tbody {
-    display:block;
-    height:300px;
-    overflow:auto;
+    display: block;
+    height: 300px;
+    overflow: auto;
 }
+
 /* Set Scroll oin table start  */
 
 
@@ -166,7 +174,7 @@ tbody {
         margin: calc(var(--header-height) + 1rem) 0 0 0;
         padding-left: calc(var(--nav-width) + 2rem)
     }
-    
+
 
     .header {
         height: calc(var(--header-height) + 1rem);
