@@ -1,6 +1,8 @@
 from flask import Flask, render_template,request
 import mysql.connector  # Import MySql Connector
-from datetime import datetime
+from datetime import date, datetime
+
+from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
@@ -50,8 +52,9 @@ def addData():
         issue= request.form['issue']
         priority= request.form['radio1']
         status=request.form['Status Type']
+        bddate=datetime.today().strftime('%Y-%m-%d')
 
-        print(name,issue,priority,status)
+        print(name,issue,priority,status,bddate)
         print("begin to execute and inside if")
 
        
@@ -60,11 +63,13 @@ def addData():
           if(DBConnection() == True):
                 mycursor = mydb.cursor()
                 print("begin to execute")
-                mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('{2}','{priority}','{status}','{name}','{issue},'{datetime}')")
-                # INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('1','High','Resolve','20123459','Not power on','2021/05/07')
+                # mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('{3}','{priority}','{status}','{name}','{issue}','2021/05/07')")
+                mycursor.execute(f"INSERT INTO TicketTable (priority, Status, AgentID, Issue, createdate) VALUES ('{priority}','{status}','{name}','{issue}','{bddate}')")
+                # ALTER TABLE TicketTable CHANGE TicketNo TicketNo INT(50)AUTO_INCREMENT -----> Enable Auto increment in RDS
+                # mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('5','{priority}','{status}','{name}','{issue}','{bddate}')")
                 mydb.commit()
-                print("begin to execute")
-                return "Sucess"
+                print("Data comitted to DB")
+                return redirect("/")
         except mysql.connector.Error as err:
              print("Something went wrong: {}".format(err))
 
