@@ -37,8 +37,8 @@
                             <span class="nav_name">Files</span> </a>
                         <a href="#" class="nav_link "> <i class='bx bx-bar-chart-alt-2 nav_icon'></i>
                             <span class="nav_name">Stats</span> </a>
-                        
-                        
+
+
                     </div>
                 </div>
                 <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i>
@@ -57,53 +57,62 @@
         <!--
     Create Modal class
 -->
+        <form method='post' accept='/add'>
+            <div class="modal" id="crtUser">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Ticket</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <table class="table table-hover table-responsive-sm">
+                                <tr>
+                                    <td>Agent ID</td>
+                                    <td><input type="text" name="agentName"></td>
+                                </tr>
+                                <tr>
+                                    <td>Issue</td>
+                                    <td><input type="text" name="issue"></td>
+                                </tr>
 
-        <div class="modal" id="crtUser">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <table class="table table-striped table-responsive-sm">
-                            <tr>
-                                <td>Name</td>
-                                <td><input type="text" name="name"></td>
-                            </tr>
-                            <tr>
-                                <td>Email ID</td>
-                                <td><input type="text" name="name"></td>
-                            </tr>
-                            <tr>
-                                <td>Password</td>
-                                <td><input type="password" name="password"></td>
-                            </tr>
-                            <tr>
-                                <td>Confirm Password</td>
-                                <td><input type="password" name="password"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" name="radio1" value="admin">Admin
-                                </td>
-                                <td>
-                                    <input type="radio" name="radio1" value="user">User
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="radio1" value="High">Priority High
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="radio1" value="Low">Priority Low
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="radio1" value="Medium">Priority Medium
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="Status Type">Status</label>
+                                        <select name="Status Type" id="Status Type">
+                                            <option value="Resolve">Resolve</option>
+                                            <option value="Progress">Progress</option>
+                                            <option value="Can't Resolve">Can't Resolve</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </div>
-
+        </form>
 
 
         <!-- Body content end -->

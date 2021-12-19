@@ -27,17 +27,21 @@ def DBConnection():
 
 #Inser The data
 @test.route("/", methods= ['GET','POST'])  
-def hello_world():
+def insertData():
     if request.method == 'POST':
         name= request.form['username']
         email= request.form['email']
-        print(name,email)
-        if(DBConnection() == True):
-            mycursor = mydb.cursor()
-            print("begin to execute")
-            mycursor.execute(f"INSERT INTO TestTable (name, email) VALUES ('{name}','{email}')")
-            mydb.commit()
-            return "sucess"
+        # print(name,email)
+        try:
+          if(DBConnection() == True):
+                mycursor = mydb.cursor()
+                print("begin to execute")
+                mycursor.execute(f"INSERT INTO TestTable (name, email) VALUES ('{name}','{email}')")
+                mydb.commit()
+                return "sucess"
+        except mysql.connector.Error as err:
+             print("Something went wrong: {}".format(err))
+
 
     return render_template("testlogin.html")
 
@@ -47,12 +51,15 @@ def hello_world():
 #load the data
 @test.route("/show", methods=['GET','POST'])
 def showTable():
-    if(DBConnection() == True):
-        mycursor = mydb.cursor()
-        mycursor.execute("Select * from TestTable")
-        if True:
-            userdata=mycursor.fetchall()
-            return render_template('showtestdata.html',userdata=userdata)
+    try:
+        if(DBConnection() == True):
+            mycursor = mydb.cursor()
+            mycursor.execute("Select * from TestTable")
+            if True:
+                userdata=mycursor.fetchall()
+                return render_template('showtestdata.html',userdata=userdata)
+    except mysql.connector.Error as err:
+             print("Something went wrong: {}".format(err))
 
 
 
