@@ -1,4 +1,10 @@
-var xValues = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+var day_of_week = new Date().getDay();
+var list = ["Sunday","Monday","Tuesday","Wednesday ","Thursday","Friday","Saturday"];
+var xValues = list.slice(day_of_week).concat(list.slice(0,day_of_week));
+
+var today = new Date();
+var day = today.getDay();
+// var xValues = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 // var yValues = [55, 49, 44, 34, 23, 38, 41];
 
 var data = $.get('/weekdata');
@@ -31,7 +37,7 @@ data.done(function (resp) {
                 text: "Weekly Ticket Data"
             },
             scales: {
-                yAxes: [{ ticks: { min: 0, max: 70 } }],
+                yAxes: [{ ticks: { min: 0, max: 30 } }],
             }
         }
     });
