@@ -31,7 +31,7 @@ data.done(function (resp) {
                 text: "Weekly Ticket Data"
             },
             scales: {
-                yAxes: [{ ticks: { min: 10, max: 70 } }],
+                yAxes: [{ ticks: { min: 0, max: 70 } }],
             }
         }
     });

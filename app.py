@@ -1,7 +1,7 @@
 import random
 from flask import Flask, render_template, request
 import mysql.connector  # Import MySql Connector
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from werkzeug.utils import redirect
 
@@ -16,8 +16,7 @@ mydb = mysql.connector.connect(
     host=url, user=username, passwd=password, database=db)
 
 
-# Create connection with database
-def DBConnection():
+def DBConnection():  # *****************Create connection with database*****************
     try:
         if (mydb.is_connected() == True):
             print("DB connection Sucessful !!!")
@@ -27,9 +26,20 @@ def DBConnection():
         print("Something went wrong: {}".format(err))
 
 
+def counter(inputdate):  # *****************Counter as per input date*****************
+    if(DBConnection() == True):
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            f'SELECT COUNT(TicketNo) FROM TicketTable WHERE createdate="{inputdate}"')
+        if True:
+            countdata = mycursor.fetchall()
+
+        res = [lis[0] for lis in countdata]
+        return res[0]
+
+
 @app.route("/")  # Index page
-def Dashboard():
-    # Load the data to table
+def Dashboard():   # *****************Load the data to table*****************
 
     try:
         if(DBConnection() == True):
@@ -43,13 +53,14 @@ def Dashboard():
         return render_template('index.html')
 
 
-# Load the weekly graph
-
 @app.route("/weekdata", methods=["GET", "POST"])
-def weekdata():
+def weekdata():                         # *****************Load the weekly graph*****************
     weekdata = []
+    todaysdate = date.today()
     for i in range(1, 8):
-        weekdata.append(random.randint(7, 80))
+        # weekdata.append(random.randint(7, 80))
+        weekdata.append(counter(todaysdate))
+        todaysdate = todaysdate-timedelta(1)
         data = {
             "weekdata": weekdata
         }
@@ -58,7 +69,6 @@ def weekdata():
 
 @app.route('/add', methods=['GET', 'POST'])
 def addData():
-    print("Test Pass")
     if (request.method == 'POST'):
         name = request.form['agentName']
         issue = request.form['issue']
@@ -66,21 +76,16 @@ def addData():
         status = request.form['Status Type']
         bddate = datetime.today().strftime('%Y-%m-%d')
 
-        print(name, issue, priority, status, bddate)
-        print("begin to execute and inside if")
-
         try:
 
             if(DBConnection() == True):
                 mycursor = mydb.cursor()
-                print("begin to execute")
                 # mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('{3}','{priority}','{status}','{name}','{issue}','2021/05/07')")
                 mycursor.execute(
                     f"INSERT INTO TicketTable (priority, Status, AgentID, Issue, createdate) VALUES ('{priority}','{status}','{name}','{issue}','{bddate}')")
                 # ALTER TABLE TicketTable CHANGE TicketNo TicketNo INT(50)AUTO_INCREMENT -----> Enable Auto increment in RDS
                 # mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('5','{priority}','{status}','{name}','{issue}','{bddate}')")
                 mydb.commit()
-                print("Data comitted to DB")
                 return redirect("/")
         except mysql.connector.Error as err:
             print("Something went wrong: {}".format(err))
