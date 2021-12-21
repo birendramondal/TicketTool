@@ -8,7 +8,7 @@ from werkzeug.utils import redirect
 app = Flask(__name__)
 
 # assigning data for the SQL connector
-url = "mytestdatabase.cme7o154w5f8.ap-south-1.rds.amazonaws.com"
+url = "1mytestdatabase.cme7o154w5f8.ap-south-1.rds.amazonaws.com"
 username = "admin"  # input("Enter User name ")
 password = "passw0rd"  # input("Inser your password ")
 db = "MyTicketDB"
