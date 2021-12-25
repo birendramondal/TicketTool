@@ -1,4 +1,5 @@
 import random
+import time
 from flask import Flask, render_template, request
 import mysql.connector  # Import MySql Connector
 from datetime import date, datetime, timedelta
@@ -26,15 +27,17 @@ def DBConnection():  # *****************Create connection with database*********
         print("Something went wrong: {}".format(err))
 
 
-def counter(inputdate):  # *****************Counter as per input date*****************
+def counter(inputdate):  # *****************Counte each date column*****************
     if(DBConnection() == True):
         mycursor = mydb.cursor()
         mycursor.execute(
             f'SELECT COUNT(TicketNo) FROM TicketTable WHERE createdate="{inputdate}"')
+       
         if True:
             countdata = mycursor.fetchall()
 
         res = [lis[0] for lis in countdata]
+        time.sleep(0.1)      #****************Add time to load the Buffer****************
         return res[0]
 
 
@@ -59,7 +62,7 @@ def weekdata():                         # *****************Load the weekly graph
     todaysdate = date.today()
     for i in range(1, 8):
         # weekdata.append(random.randint(7, 80))
-        weekdata.append(counter(todaysdate))
+        weekdata.append(counter(todaysdate))  #****************Call the Counter Function ****************
         todaysdate = todaysdate-timedelta(1)
         data = {
             "weekdata": weekdata
