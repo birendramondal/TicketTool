@@ -61,16 +61,16 @@ def weekdata():                         # *****************Load the weekly graph
     weekdata = []
     todaysdate = date.today()
     for i in range(1, 8):
-        # weekdata.append(random.randint(7, 80))
+        # weekdata.append(random.randint(7, 80))    ****************Generate Random Graph****************
         weekdata.append(counter(todaysdate))  #****************Call the Counter Function ****************
-        todaysdate = todaysdate-timedelta(1)
+        todaysdate = todaysdate-timedelta(1)  
         data = {
             "weekdata": weekdata
         }
     return data
 
 
-@app.route('/add', methods=['GET', 'POST'])
+@app.route('/add', methods=['GET', 'POST'])   #****************Add Value to the DB****************
 def addData():
     if (request.method == 'POST'):
         name = request.form['agentName']
@@ -80,19 +80,16 @@ def addData():
         bddate = datetime.today().strftime('%Y-%m-%d')
 
         try:
-
             if(DBConnection() == True):
                 mycursor = mydb.cursor()
-                # mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('{3}','{priority}','{status}','{name}','{issue}','2021/05/07')")
-                mycursor.execute(
-                    f"INSERT INTO TicketTable (priority, Status, AgentID, Issue, createdate) VALUES ('{priority}','{status}','{name}','{issue}','{bddate}')")
+                mycursor.execute(f"INSERT INTO TicketTable (priority, Status, AgentID, Issue, createdate) VALUES ('{priority}','{status}','{name}','{issue}','{bddate}')")
                 # ALTER TABLE TicketTable CHANGE TicketNo TicketNo INT(50)AUTO_INCREMENT -----> Enable Auto increment in RDS
-                # mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('5','{priority}','{status}','{name}','{issue}','{bddate}')")
+                # mycursor.execute(f"INSERT INTO TicketTable (TicketNo, priority, Status, AgentID, Issue, createdate) VALUES ('5','{priority}','{status}','{name}','{issue}','{bddate}')") -----> With Customize Ticket Number 
                 mydb.commit()
                 return redirect("/")
+
         except mysql.connector.Error as err:
             print("Something went wrong: {}".format(err))
-
     else:
         print("not added")
 
