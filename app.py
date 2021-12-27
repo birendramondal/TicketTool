@@ -27,7 +27,7 @@ def DBConnection():  # *****************Create connection with database*********
         print("Something went wrong: {}".format(err))
 
 
-def counter(inputdate):  # *****************Counte each date column*****************
+def counter(inputdate):  # *****************Count date column for load the 7 Days Data *****************
     if(DBConnection() == True):
         mycursor = mydb.cursor()
         mycursor.execute(
@@ -37,7 +37,7 @@ def counter(inputdate):  # *****************Counte each date column*************
             countdata = mycursor.fetchall()
 
         res = [lis[0] for lis in countdata]
-        time.sleep(0.1)      #****************Add time to load the Buffer****************
+        time.sleep(0.1)      #****************Add time to load in to the Buffer****************
         return res[0]
 
 
@@ -92,6 +92,14 @@ def addData():
             print("Something went wrong: {}".format(err))
     else:
         print("not added")
+
+
+@app.route('/delete/<int:sno>', methods=['GET', 'POST'])
+def updateDB(sno):
+    if (request.method == 'POST'):
+        TicketNumber = request.form[sno]
+        print(TicketNumber)
+
 
 
 if __name__ == "__main__":

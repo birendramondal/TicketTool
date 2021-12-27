@@ -30,9 +30,12 @@
                         <th scope="col">Ticket no</th>
                         <th scope="col">Priority</th>
                         <th scope="col">Agent</th>
-                        <th scope="col">Issue</th>
                         <th scope="col">Date</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Issue</th>
+                        <th scope="col">Ticket No</th>
+                        <th scope="col">Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -42,9 +45,14 @@
                         <td>{{loop.index}}</td>
                         <td>{{user[1]}}</td>
                         <td>{{user[3]}}</td>
-                        <td>{{user[4]}}</td>
                         <td>{{user[5]}}</td>
                         <td>{{user[2]}}</td>
+                        <td>{{user[4]}}</td>
+                        <td>{{user[0]}}</td>
+                        <td>
+                            <button action='/update/{{user[0]}}' method='post' type="button" class="btn btn-outline-success btn-sm mx-1">Update</button>
+                            <button action='/delete/{{user[0]}}' method='post' type="button" class="btn btn-outline-danger btn-sm mx-1">Delete</button>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
