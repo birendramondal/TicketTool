@@ -94,11 +94,21 @@ def addData():
         print("not added")
 
 
-@app.route('/delete/<int:sno>', methods=['GET', 'POST'])
-def updateDB(sno):
-    if (request.method == 'POST'):
-        TicketNumber = request.form[sno]
-        print(TicketNumber)
+
+@app.route('/delete/<string:str>', methods = ['GET'])
+def delete(str):
+    try:
+        if(DBConnection() == True):
+            mycursor = mydb.cursor()
+            mycursor.execute(f"DELETE FROM TicketTable WHERE TicketNo='{str}'")
+            mydb.commit()
+            time.sleep(0.1)   
+            print("Data Removed !!")
+            return redirect("/")
+
+            
+    except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err)) 
 
 
 
