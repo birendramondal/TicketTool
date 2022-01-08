@@ -111,6 +111,25 @@ def delete(str):
             print("Something went wrong: {}".format(err)) 
 
 
+@app.route('/edit/<string:str>', methods =['POST', 'GET'])
+def edit(str):
+    if (request.method == 'POST'):
+        name = request.form['agentName']
+        issue = request.form['issue']
+        priority = request.form['radio1']
+        status = request.form['Status Type']
+        bddate = datetime.today().strftime('%Y-%m-%d')
+        try:
+            if(DBConnection() == True):
+                mycursor = mydb.cursor()
+                mycursor.execute(f"UPDATE TicketTable SET priority='{priority}', Status='{status}',AgentID='{name}',Issue='{issue}',createdate='{bddate}' WHERE TicketNo={str};")
+                mydb.commit()
+        
+        except mysql.connector.Error as err:
+            print("Something went wrong: {}".format(err)) 
+
+    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
