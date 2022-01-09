@@ -124,6 +124,7 @@ def edit(str):
                 mycursor = mydb.cursor()
                 mycursor.execute(f"UPDATE TicketTable SET priority='{priority}', Status='{status}',AgentID='{name}',Issue='{issue}',createdate='{bddate}' WHERE TicketNo={str};")
                 mydb.commit()
+                return redirect("/")
         
         except mysql.connector.Error as err:
             print("Something went wrong: {}".format(err)) 
